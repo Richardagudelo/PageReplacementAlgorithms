@@ -21,7 +21,7 @@ public abstract class PageReplacementAlgorithm {
 	public int[][] pageFrames;
 
 	/**
-	 * Actualiza los valores del algoritmo
+	 * Actualiza o resetea los valores del algoritmo
 	 * 
 	 * @param referenceChain   la nueva cadena de referencia a trabajar
 	 * @param pageFramesNumber el numero de marcos de pagina con los que se va a
@@ -61,11 +61,27 @@ public abstract class PageReplacementAlgorithm {
 		System.out.println(message);
 		message = "";
 		for (int k = 0; k < pageFrames[0].length; k++) {
-			message += pageFrames[pageFrames.length - 1][k] == 1 ? "X" : "";
+			message += pageFrames[pageFrames.length - 1][k] == 1 ? "X" : "\t";
 		}
 		System.out.println(message);
 		calculateTotalPageFailures();
 		System.out.println("\n" + "Numero total de fallos de pagina: " + totalPageFailures);
+	}
+
+	/**
+	 * Busca si el valor a ingresar ya existe en el marco de pagina ingresado
+	 * 
+	 * @param columnSearch columna a buscar, marco de pagina
+	 * @param shiftNumber  numero que se va a insertar
+	 * @return si hubo fallo de pagina (cuando el numero no estaba)
+	 */
+	public boolean isPageFailure(int columnSearch, int shiftNumber) {
+		for (int i = 0; i < pageFrames.length; i++) {
+			if (pageFrames[i][columnSearch] == shiftNumber) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
