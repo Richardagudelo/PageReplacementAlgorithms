@@ -1,9 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
-
 import models.PageReplacementAlgorithm;
 import models.algorithms.FIFO;
+import models.algorithms.LRU;
 
 /**
  * Controlador de la aplicacion
@@ -16,20 +16,24 @@ public class Control {
 
 	public Control() {
 		ArrayList<Integer> auxList = new ArrayList<Integer>();
-		auxList.add(4);
-		auxList.add(3);
-		auxList.add(2);
 		auxList.add(1);
-		auxList.add(4);
+		auxList.add(2);
+		auxList.add(3);
 		auxList.add(3);
 		auxList.add(5);
-		auxList.add(4);
-		auxList.add(3);
+		auxList.add(1);
+		auxList.add(2);
+		auxList.add(2);
+		auxList.add(6);
 		auxList.add(2);
 		auxList.add(1);
 		auxList.add(5);
-		pageReplacementAlgorithm = new FIFO();
-		pageReplacementAlgorithm.setAlgorithmValues(auxList, 3);
+		auxList.add(7);
+		auxList.add(6);
+		auxList.add(3);
+		
+		pageReplacementAlgorithm = new LRU();
+		pageReplacementAlgorithm.setAlgorithmValues(auxList, 4);
 		
 		pageReplacementAlgorithm.runPageReplacementAlgorithm();
 
