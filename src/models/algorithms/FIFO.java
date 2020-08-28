@@ -14,6 +14,9 @@ public class FIFO extends PageReplacementAlgorithm {
 		runFIFO();
 	}
 
+	/**
+	 * Empieza la ejecucion del algoritmo FIFO
+	 */
 	private void runFIFO() {
 		int columnaEmpezar = completeFirstRows();
 		columnaEmpezar += 1;

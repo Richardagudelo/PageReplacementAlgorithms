@@ -2,6 +2,11 @@ package models.algorithms;
 
 import models.PageReplacementAlgorithm;
 
+/**
+ * Algoritmos LRU
+ * 
+ * @authors Oscar Rojas C, Cristhian Chamorro Vallejo, Richard Agudelo Contento
+ */
 public class LRU extends PageReplacementAlgorithm {
 
 	@Override
@@ -9,6 +14,9 @@ public class LRU extends PageReplacementAlgorithm {
 		runLRU();
 	}
 
+	/**
+	 * Ejecuta los metodos para funcionamiento de LRU
+	 */
 	private void runLRU() {
 		int columnaEmpezar = completeFirstRows();
 		columnaEmpezar += 1;
