@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Esta clase es una clase abstracta de la cual van a heredar las clases de los
@@ -50,7 +51,8 @@ public abstract class PageReplacementAlgorithm {
 		for (int numb : referenceChain) {
 			System.out.print(numb + "\t");
 		}
-		System.out.println();
+		System.out.println("TIME\n");
+
 		String message = "";
 		for (int i = 0; i < pageFrames.length - 1; i++) {
 			for (int j = 0; j < pageFrames[0].length; j++) {
@@ -59,29 +61,103 @@ public abstract class PageReplacementAlgorithm {
 			message += "\n";
 		}
 		System.out.println(message);
+
 		message = "";
-		for (int k = 0; k < pageFrames[0].length; k++) {
-			message += pageFrames[pageFrames.length - 1][k] == 1 ? "X" : "\t";
+		for (int k = 0; k < pageFrames[0].length - 1; k++) {
+			message += pageFrames[pageFrames.length - 1][k] == 1 ? "X\t" : "\t";
 		}
 		System.out.println(message);
 		calculateTotalPageFailures();
-		System.out.println("\n" + "Numero total de fallos de pagina: " + totalPageFailures);
+		System.out.println("Numero total de fallos de pagina: " + totalPageFailures);
 	}
 
 	/**
-	 * Busca si el valor a ingresar ya existe en el marco de pagina ingresado
+	 * Busca si el valor a ingresar ya existe en el marco de pagina ingresado, si
+	 * hay fallo de pagina entonces lo crea
 	 * 
 	 * @param columnSearch columna a buscar, marco de pagina
 	 * @param shiftNumber  numero que se va a insertar
 	 * @return si hubo fallo de pagina (cuando el numero no estaba)
 	 */
 	public boolean isPageFailure(int columnSearch, int shiftNumber) {
-		for (int i = 0; i < pageFrames.length; i++) {
+		for (int i = 0; i < pageFrames.length - 1; i++) {
 			if (pageFrames[i][columnSearch] == shiftNumber) {
 				return false;
 			}
 		}
+		pageFrames[pageFrames.length - 1][columnSearch] = 1;
 		return true;
+	}
+
+	/**
+	 * Obtiene el mayor o menor tiempo de uso entre los marcos, dependiendo de la
+	 * variable searchMax
+	 * 
+	 * @param searchMax es true si quiere buscar el que mas tiempo ha estado o false
+	 *                  si quiere encontrar el que menos tiempo ha estado
+	 * @return el resultado segun lo pedido
+	 */
+	public int getMaximumOrMinimumUseTime(boolean searchMax) {
+		ArrayList<Integer> useTimes = new ArrayList<Integer>();
+		for (int i = 0; i < pageFrames.length - 1; i++) {
+			useTimes.add(pageFrames[i][pageFrames[0].length - 1]);
+		}
+
+		useTimes.sort(new Comparator<Integer>() {
+			@Override
+			public int compare(Integer number1, Integer number2) {
+				return number1 - number2; // orden descendente
+			}
+		});
+
+		int result = searchMax ? useTimes.size() - 1 : 0;
+		return useTimes.get(result);
+	}
+
+	/**
+	 * Busca la posicion en la matriz donde encontro el mayor o menor tiempo segun
+	 * el parametro
+	 * 
+	 * @param searchMax busca el maximo(true) o el minimo(false)
+	 * @return la posicion donde lo encontro, en la matriz
+	 */
+	public int getMaximumOrMinimumUseTimeRowPosition(boolean searchMax) {
+		int position = 0;
+		int maximumOrMinimumValue = this.getMaximumOrMinimumUseTime(searchMax);
+
+		for (int i = 0; i < pageFrames.length - 1; i++) {
+			if (pageFrames[i][pageFrames[0].length - 1] == maximumOrMinimumValue) {
+				position = i;
+				break;
+			}
+		}
+		return position;
+	}
+
+	/**
+	 * Copia la columna actual en la siguiente, si es que existe en la matriz
+	 * 
+	 * @param currentColumn columna en la que se encuentra actualmente
+	 */
+	public void copyColumnInNext(int currentColumn) {
+		int nextColumn = currentColumn + 1;
+		if (nextColumn < pageFrames[0].length - 1) {
+			for (int i = 0; i < pageFrames.length - 1; i++) {
+				pageFrames[i][nextColumn] = pageFrames[i][currentColumn];
+			}
+		}
+	}
+
+	/**
+	 * Le suma 1 a todos los tiempos de uso mayores que 0, es decir que hay algo en
+	 * el marco
+	 */
+	public void plusOneToAllUseTime(int currentColumn) {
+		for (int i = 0; i < pageFrames.length - 1; i++) {
+			if (pageFrames[i][currentColumn] >= 0) {
+				pageFrames[i][pageFrames[0].length - 1] += 1;
+			}
+		}
 	}
 
 	/**
@@ -95,6 +171,9 @@ public abstract class PageReplacementAlgorithm {
 				pageFrames[i][j] = -1;
 			}
 		}
+		for (int i = 0; i < pageFrames.length; i++) {
+			pageFrames[i][pageFrames[0].length - 1] = 0;
+		}
 	}
 
 	/**
@@ -102,8 +181,11 @@ public abstract class PageReplacementAlgorithm {
 	 * encontrados en la matriz
 	 */
 	private void calculateTotalPageFailures() {
-		for (int k = 0; k < pageFrames[0].length; k++) {
-			totalPageFailures += pageFrames[pageFrames.length - 1][k] == 1 ? 1 : 0;
+		totalPageFailures = 0;
+		for (int k = 0; k < pageFrames[0].length - 1; k++) {
+			if (pageFrames[pageFrames.length - 1][k] == 1) {
+				totalPageFailures += 1;
+			}
 		}
 	}
 

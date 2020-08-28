@@ -1,5 +1,7 @@
 package runner;
 
+import controller.Control;
+
 /**
  * Esta clase inicia la ejecucion del programa
  * 
@@ -14,6 +16,6 @@ public class PageReplacementAlgorithms {
 
 	public static void main(String[] args) {
 
-		System.out.println("Working on !");
+		new Control();
 	}
 }
