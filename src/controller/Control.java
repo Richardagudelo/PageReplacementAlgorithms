@@ -2,7 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import events.Events;
 import models.*;
 import views.MainWindow;
@@ -23,7 +22,6 @@ public class Control implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		switch (Events.valueOf(e.getActionCommand())) {
 		case EXIT:
 			System.exit(0);
@@ -35,13 +33,25 @@ public class Control implements ActionListener {
 			startAlgorithm();
 			break;
 		}
-
 	}
 
+	/**
+	 * Inicia la accion cuando el usuario presiona el boton de iniciar algoritmo
+	 */
 	private void startAlgorithm() {
 		pageReplacementAlgorithm = mainWindow.getReplacementAlgorithm();
 		pageReplacementAlgorithm.setAlgorithmValues(mainWindow.getChain(), mainWindow.getFramesToWork());
 		pageReplacementAlgorithm.runPageReplacementAlgorithm();
 		pageReplacementAlgorithm.showResults();
+		prepareResultsTable();
+	}
+
+	/**
+	 * Prepara la tabla de interfaz con los datos suministrados por el usuario y sus
+	 * correspondientes resultados
+	 */
+	private void prepareResultsTable() {
+		mainWindow.changeResultsTableColumnIdentifiers(pageReplacementAlgorithm.getReferenceChain().toArray());
+		mainWindow.manageResultsTableData(pageReplacementAlgorithm.getPageFrames(), pageReplacementAlgorithm.getTotalPageFailures()+"");
 	}
 }
