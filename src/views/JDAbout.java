@@ -1,10 +1,10 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 
 public class JDAbout extends JDialog {
 
@@ -14,17 +14,36 @@ public class JDAbout extends JDialog {
 		setModal(true);
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("About");
-		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 25));
-		setSize(220, 250);
+		setLayout(new BorderLayout());
+		setSize(500, 250);
 		setLocationRelativeTo(mainWindow);
 		setIconImage(new ImageIcon(getClass().getResource("/img/icon.png")).getImage());
 		setResizable(false);
 
-		add(new JLabel("Integrantes"));
-		add(new JLabel("============================="));
-		add(new JLabel("Oscar Augusto Rojas Cruz"));
-		add(new JLabel("Richard Agudelo Contento"));
-		add(new JLabel("Cristhian Andres Chamorro"));
+		String info = "<html>"
+				+ 		"<body>"
+				+ 			"<p style=\"text-align:center;font-size:14\">Integrantes"
+				+ 			"<br>"
+				+ 			"Cristhian Andres Chamorro"
+				+ 			"<br>"
+				+ 			"Richard Agudelo Contento"
+				+ 			"<br>"
+				+ 			"Oscar Augusto Rojas Cruz"
+				+ 			"<br>"
+				+ 			"<br>"
+				+ 			"Repositorio Código GitHub : "
+				+ 			"<br>"
+				+ 			"</p>"
+				+ 		"</body>"
+				+ 	"</html>";
+		
+		add(new OwnJLabel(info), BorderLayout.PAGE_START);	
+		
+		OwnJTextField repo = new OwnJTextField("");
+		repo.setFont(new Font("Arial", 2, 15));
+		repo.setForeground(Color.BLUE);
+		repo.setText("https://github.com/Richardagudelo/PageReplacementAlgorithms");
+		add(repo, BorderLayout.CENTER);
 
 		setVisible(true);
 	}

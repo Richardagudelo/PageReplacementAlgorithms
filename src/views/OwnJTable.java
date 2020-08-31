@@ -25,7 +25,7 @@ public class OwnJTable extends JTable {
 		getTableHeader().setForeground(Color.BLACK);
 		getTableHeader().setFont(new Font("Consolas", 0, 19));
 
-		setFont(new Font("Consolas", 0, 18));
+		setFont(new Font("Consolas", 0, 17));
 		setBackground(Color.WHITE);
 		setForeground(Color.BLACK);
 	}
@@ -83,7 +83,12 @@ public class OwnJTable extends JTable {
 		for (int i = 0; i < numberOfRows; i++) {
 			rowValues = new String[numberOfColumns];
 			for (int j = 0; j < numberOfColumns; j++) {
-				rowValues[j] = pageFrames[i][j] + "";
+				if (pageFrames[i][j] == -1) {
+					rowValues[j] = "";
+				}
+				else {
+					rowValues[j] = pageFrames[i][j] + "";
+				}
 			}
 			dtmElements.addRow(rowValues);
 		}

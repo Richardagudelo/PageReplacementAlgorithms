@@ -21,13 +21,12 @@ public class ResultsDialog extends JDialog {
 	public ResultsDialog(JFrame mainWindow) {
 		super(mainWindow);
 		setModal(true);
-		setSize(650, 400);
+		setSize(700, 450);
 		setIconImage(new ImageIcon(getClass().getResource("/img/icon.png")).getImage());
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Resultados del algoritmo");
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(mainWindow);
-		setResizable(false);
 
 		lblTitle = new OwnJLabel("Resultados algoritmo reemplazo de página");
 		add(lblTitle, BorderLayout.PAGE_START);
