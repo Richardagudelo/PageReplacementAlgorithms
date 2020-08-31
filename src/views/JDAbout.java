@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
@@ -14,13 +15,17 @@ public class JDAbout extends JDialog {
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("About");
 		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 25));
-		setSize(180, 200);
+		setSize(220, 250);
 		setLocationRelativeTo(mainWindow);
-		
-		add(new JLabel("Oscar Rojas"));
-		add(new JLabel("Richard Agudelo"));
-		add(new JLabel("Cristhian Chamorro"));
-		
+		setIconImage(new ImageIcon(getClass().getResource("/img/icon.png")).getImage());
+		setResizable(false);
+
+		add(new JLabel("Integrantes"));
+		add(new JLabel("============================="));
+		add(new JLabel("Oscar Augusto Rojas Cruz"));
+		add(new JLabel("Richard Agudelo Contento"));
+		add(new JLabel("Cristhian Andres Chamorro"));
+
 		setVisible(true);
 	}
 }
